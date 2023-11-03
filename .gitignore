@@ -7,3 +7,4 @@ test.ipynb
 .ipynb_checkpoints
 notebooks/.ipynb_checkpoints
 notebooks/passwords.py
+notebooks/__pycache__
