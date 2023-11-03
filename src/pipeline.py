@@ -16,8 +16,6 @@ from passwords import STR_CONN # a file with my connection string to the mongodb
 
 from pysentimiento import create_analyzer
 
-import pandas as pd
-
 # Driver options
 
 opciones=Options()
