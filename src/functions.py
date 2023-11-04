@@ -101,6 +101,7 @@ def extractor(user):
                     {"_id": commentor['_id']},
                     {"$set": {"last_update": datetime.datetime.now()}}
                     )
+
             
 def get_top():
     
