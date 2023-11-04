@@ -2,11 +2,15 @@
 
 from chat_downloader import ChatDownloader
 import datetime
+import time
+
 from pymongo import MongoClient
 from passwords import STR_CONN # a file with my connection string to the mongodb atlas db
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+
+from preloads import *
 
 def extractor(user, platform):
     '''
@@ -44,12 +48,12 @@ def extractor(user, platform):
     # take creator id
     new_id = temp[0]['channel_id']
     try:
-        db.creaator.update_one(
-                    {"_id": vid_id},
+        db.creator.update_one(
+                    {"name": vid_id},
                     {"$set": {"last_update": datetime.datetime.now()}}
                     )
     except:
-        continue
+        pass
 
     # try pass just in case the author id is already there
     try:
@@ -67,8 +71,8 @@ def extractor(user, platform):
         # message
         mess = samp['message']
         mess_id = samp['message_id']
-        sent = analyzer.predict(mess).__dict__['output']
-        hate = hate_speech_analyzer.predict(mess).__dict__['output']
+        sent = ANALYZER.predict(mess).__dict__['output']
+        hate = HATE_SPEECH.predict(mess).__dict__['output']
         # common
         ts = samp['timestamp']
         # author
@@ -123,7 +127,7 @@ def get_top_twitch():
     - Add description.
     '''
 
-    driver = webdriver.Chrome(opciones)
+    driver = webdriver.Chrome(OPCIONES)
 
     time.sleep(2)
 
@@ -145,7 +149,7 @@ def get_top_twitch():
         if user == users[0]:
             continue
         else:
-            add_creator(user)
+            add_creator(user, users[0], driver)
         
     driver.quit()
     return(users)
@@ -158,7 +162,7 @@ def get_top_twitch_lame():
     - Add description.
     '''
 
-    driver = webdriver.Chrome(opciones)
+    driver = webdriver.Chrome(OPCIONES)
 
     time.sleep(2)
 
@@ -176,13 +180,13 @@ def get_top_twitch_lame():
         if user == users[0]:
             continue
         else:
-            add_creator(user)
+            add_creator(user, users[0], driver)
         
     driver.quit()
     return(users)
 
 
-def add_creator(user):
+def add_creator(user, platform, driver):
 
     url = f'https://www.twitch.tv/{user}'
     driver.get(url)
@@ -190,10 +194,14 @@ def add_creator(user):
     followers = driver.find_element(By.XPATH, '//*[@id="live-channel-about-panel"]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/span/div/div/span').text
 
     user = {'name': user,
-            'platform': users[0],
+            'platform': platform,
             'followers': followers,
             'last_update': datetime.datetime.now()
             }
+    
+    cursor = MongoClient(STR_CONN)
+    db = cursor.live_chats
+    
     try:
         db.creator.insert_one(user)
     except:

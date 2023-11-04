@@ -1,5 +1,6 @@
 import time
 from functions import *
+from preloads import *
 
 duration = 5 * 60 * 60  # 5 hours * 60 minutes * 60 seconds
 
@@ -18,7 +19,7 @@ while True:
     try:
         for i in range(2):
             if i:
-                users = get_top_twitch_lame()
+                users = get_top_twitch()
             else:
                 pass
 
