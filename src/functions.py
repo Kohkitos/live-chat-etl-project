@@ -8,11 +8,10 @@ from passwords import STR_CONN # a file with my connection string to the mongodb
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-def extractor(user):
+def extractor(user, platform):
     '''
     TO DO LIST:
     
-    - add a second argument to specify if twitch or youtube
     - add a proper description
     '''
     
@@ -38,8 +37,19 @@ def extractor(user):
                 '_id': vid_id,
                 'title': vid_title,
                 'first_recored': datetime.datetime.now(),
+                'platform': platform,
                 'last_update': datetime.datetime.now()
                 }
+    
+    # take creator id
+    new_id = temp[0]['channel_id']
+    try:
+        db.creaator.update_one(
+                    {"_id": vid_id},
+                    {"$set": {"last_update": datetime.datetime.now()}}
+                    )
+    except:
+        continue
 
     # try pass just in case the author id is already there
     try:
@@ -71,14 +81,16 @@ def extractor(user):
                     'date': datetime.datetime.now(),
                     'timestamp': ts,
                     'commentator_id': com_id,
-                    'video_id': vid_id,
+                    'video_title': vid_title,
+                    'platform': platform,
                     'sentiment_analysis': sent,
-                    'hat_speech_analysis': hate
+                    'hate_speech_analysis': hate
                     }
 
         auth_son = {
                     '_id': com_id,
                     'name': name,
+                    'platform': platform,
                     'last_update': datetime.datetime.now()
                     }
 
@@ -103,7 +115,7 @@ def extractor(user):
                     )
 
             
-def get_top():
+def get_top_twitch():
     
     '''
     TO DO:
@@ -127,6 +139,66 @@ def get_top():
 
     for e in top_5:
         users.append(e.find_elements(By.CSS_SELECTOR, 'a')[1].text.lower())
+    
 
+    for user in users:
+        if user == users[0]:
+            continue
+        else:
+            add_creator(user)
+        
     driver.quit()
     return(users)
+
+def get_top_twitch_lame():
+    
+    '''
+    TO DO:
+    
+    - Add description.
+    '''
+
+    driver = webdriver.Chrome(opciones)
+
+    time.sleep(2)
+
+    url = 'https://twitchtracker.com/channels/live/spanish' # web with top live streams in spanish at the moment
+
+    driver.get(url)
+
+    # process to get the top_5
+    table = driver.find_element(By.CSS_SELECTOR, 'table')
+    best = table.find_element(By.CSS_SELECTOR, 'tr').find_elements(By.CSS_SELECTOR, 'a')[1].text.lower()
+
+    users = ['twitch', best]
+
+    for user in users:
+        if user == users[0]:
+            continue
+        else:
+            add_creator(user)
+        
+    driver.quit()
+    return(users)
+
+
+def add_creator(user):
+
+    url = f'https://www.twitch.tv/{user}'
+    driver.get(url)
+
+    followers = driver.find_element(By.XPATH, '//*[@id="live-channel-about-panel"]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/span/div/div/span').text
+
+    user = {'name': user,
+            'platform': users[0],
+            'followers': followers,
+            'last_update': datetime.datetime.now()
+            }
+    try:
+        db.creator.insert_one(user)
+    except:
+        db.creator.update_one(
+                            {"name": user},
+                            {"$set": {"last_update": datetime.datetime.now(),
+                                     "followers": followers}}
+                            )
