@@ -35,30 +35,54 @@ def extractor(user, platform):
         url = f'https://www.twitch.tv/{user}'
     else:
         url = user
-        
-    chat = ChatDownloader().get_chat(url,
-                                    retry_timeout = -1, # -1 makes the downloader to retreive a message as soon as is published
-                                    timeout = 60)       # 60 secs of scrapping
-    temp = []
-    for message in chat:                        
-        temp.append(message)
-        
+    
     # load mongo cursor
     cursor = MongoClient(STR_CONN)
 
     db = cursor.live_chats
+    
+    
+    try:
+        chat = ChatDownloader().get_chat(url,
+                                        retry_timeout = -1, # -1 makes the downloader to retreive a message as soon as is published
+                                        timeout = 120)       # 120 secs of scrapping
+    except:
+        try:
+            video_son = {
+                '_id': url[32:],
+                'url': url,
+                'first_recored': datetime.datetime.now(),
+                'platform': platform,
+                'last_update': datetime.datetime.now(),
+                'chat_disabled': True
+                }
+            db.video.insert_one(video_son)
+        except:
+            db.video.update_one(
+                                {"_id": vid_id},
+                                {"$set": {"last_update": datetime.datetime.now(),
+                                         'chat_disabled': True}}
+                                )
+        return 1
+        
+        
+    temp = []
+    for message in chat:                        
+        temp.append(message)
+
 
     # video data
     vid_id = chat.__dict__['id']
-    vid_url = url
     vid_title = chat.__dict__['title']
 
     video_son = {
                 '_id': vid_id,
                 'title': vid_title,
+                'url': url,
                 'first_recored': datetime.datetime.now(),
                 'platform': platform,
-                'last_update': datetime.datetime.now()
+                'last_update': datetime.datetime.now(),
+                'chat_disabled': False
                 }
 
     # try pass just in case the author id is already there
@@ -67,7 +91,8 @@ def extractor(user, platform):
     except:
         db.video.update_one(
                             {"_id": vid_id},
-                            {"$set": {"last_update": datetime.datetime.now()}}
+                            {"$set": {"last_update": datetime.datetime.now(),
+                                     'chat_disabled': False}}
                             )
     # message and author
     messages = []
@@ -317,10 +342,14 @@ def add_creator(user, platform, driver):
     elif platform == 'youtube':
         driver.get(user)
         
+        time.sleep(2)
+        
         try:
             driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div/div/div[2]/div[1]/div[3]/div[1]/form[1]/div/div/button/span').click() # reject cookies
         except:
             pass
+        
+        time.sleep(2)
         
         try:
             driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[6]/div[1]/ytd-button-renderer[1]/yt-button-shape/button/yt-touch-feedback-shape/div/div[2]').click() # reject second set of cookies
