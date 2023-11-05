@@ -10,27 +10,31 @@ initiation_time = time.time()
 while True:
     
     elapsed_time = time.time() - initiation_time
+    
     if elapsed_time >= duration:
         break   
     else:
         pass
     
     # try except just in case something unexpected breaks
-    try:
-        for i in range(2):
-            if i:
+    for i in range(2):
+        if i:
+            try:
                 users = get_top_twitch_lame()
-            else:
+            except:
+                continue
+        else:
+            try:
                 users = get_top_youtube_lame()
+            except:
+                continue
 
-        # try except just in case a streaming goes offline just in time I initiate function
-            for user in users:
-                if user == users[0]:
-                    continue
+    # try except just in case a streaming goes offline just in time I initiate function
+        for user in users:
+            if user == users[0]:
+                continue
+            else:
                 try:
                     extractor(user, users[0])
                 except:
-                    continue
-    except:
-        print (f'An unexpected error ocurred when {elapsed_time} seconds have transcurred.')
-        break
+                    pass
