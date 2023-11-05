@@ -258,18 +258,17 @@ def get_top_youtube():
     # process to get the top_5
     best = top_5 = driver.find_element(By.XPATH, '//*[@id="app"]/div[1]/div/main/div[5]/div').find_elements(By.CSS_SELECTOR, 'div.item.list__item')[:5]
     
-    urls = ['youtube']
-    
+    users = ['youtube']
+
     for vid in best:
         href = vid.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')[30:]
-        urls.append(f'https://www.youtube.com/watch?v={href}')
-    
+        users.append(f'https://www.youtube.com/watch?v={href}')
     for user in users:
         if user == users[0]:
             continue
         else:
             add_creator(user, users[0], driver)
-        
+    
     driver.quit()
     return(users)
 
