@@ -321,6 +321,12 @@ def add_creator(user, platform, driver):
             driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div/div/div[2]/div[1]/div[3]/div[1]/form[1]/div/div/button/span').click() # reject cookies
         except:
             pass
+        
+        try:
+            driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[6]/div[1]/ytd-button-renderer[1]/yt-button-shape/button/yt-touch-feedback-shape/div/div[2]').click() # reject second set of cookies
+        except:
+            pass
+        
         _id = user[32:]
         user = driver.find_element(By.XPATH, '//*[@id="text"]/a').text
         followers = driver.find_element(By.XPATH, '//*[@id="owner-sub-count"]').text[:6]
