@@ -133,9 +133,12 @@ _____  _       _  _____  __    _
 def get_top_twitch():
     
     '''
-    TO DO:
-    
-    - Add description.
+    Retrievs a list with the names of the top 5 streamers with the most viewers
+    in Spanish language.
+
+    :return: a list with the first element being 'twitch', and the other five the
+    streamers' names.
+    :rtype: lst of str.
     '''
 
     driver = webdriver.Chrome(OPCIONES)
@@ -170,9 +173,12 @@ def get_top_twitch():
 def get_top_twitch_lame():
     
     '''
-    TO DO:
-    
-    - Add description.
+    Retrievs a list with the names of the top 1 streamers with the most viewers
+    in Spanish language.
+
+    :return: a list with the first element being 'twitch', and the other one the
+    streamer's names.
+    :rtype: lst of str.
     '''
 
     driver = webdriver.Chrome(OPCIONES)
