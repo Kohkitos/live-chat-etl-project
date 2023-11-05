@@ -38,9 +38,7 @@ def extractor(user, platform):
     
     # load mongo cursor
     cursor = MongoClient(STR_CONN)
-
     db = cursor.live_chats
-    
     
     try:
         chat = ChatDownloader().get_chat(url,
@@ -64,12 +62,9 @@ def extractor(user, platform):
                                          'chat_disabled': True}}
                                 )
         return 1
-        
-        
-    temp = []
+ 
     for message in chat:                        
-        temp.append(message)
-
+        add_message(message, db)
 
     # video data
     vid_id = chat.__dict__['id']
@@ -94,61 +89,7 @@ def extractor(user, platform):
                             {"$set": {"last_update": datetime.datetime.now(),
                                      'chat_disabled': False}}
                             )
-    # message and author
-    messages = []
-    commentors = []
-
-    for samp in temp:
-        # message
-        mess = samp['message']
-        mess_id = samp['message_id']
-        sent = ANALYZER.predict(mess).__dict__['output']
-        hate = HATE_SPEECH.predict(mess).__dict__['output']
-        # common
-        ts = samp['timestamp']
-        # author
-        name = samp['author']['name']
-        com_id = samp['author']['id']
-
-        mess_son = {
-                    '_id': mess_id,
-                    'message': mess,
-                    'date': datetime.datetime.now(),
-                    'timestamp': ts,
-                    'commentator_id': com_id,
-                    'video_title': vid_title,
-                    'platform': platform,
-                    'sentiment_analysis': sent,
-                    'hate_speech_analysis': hate
-                    }
-
-        auth_son = {
-                    '_id': com_id,
-                    'name': name,
-                    'platform': platform,
-                    'last_update': datetime.datetime.now()
-                    }
-
-        messages.append(mess_son)
-        commentors.append(auth_son)
-        
-    # sometimes, a message can be recorded twice, this will prevent any error
-    for message in messages:
-        try:
-            db.message.insert_one(message)
-        except:
-            pass
-    
-    # just in case a commentor is a recurrent user, we will update the last_update
-    for commentor in commentors:
-        try:
-            db.user.insert_one(commentor)
-        except:
-            db.user.update_one(
-                    {"_id": commentor['_id']},
-                    {"$set": {"last_update": datetime.datetime.now()}}
-                    )
-            
+ 
 '''
 _____  _       _  _____  __    _    
  | |  \ \    /| |  | |  / /`  | |_| 
@@ -315,6 +256,59 @@ def get_top_youtube_lame():
 |_|  | \_\_/ |_| \| \_\_/ \_\_/ |_|_/ |_|_) 
 '''
 
+def add_message(samp, db):
+    '''
+    Takes a message and adds its info and the author's info to the mongo database provided.
+    
+    :param samp: a json with message's info.
+    :type samp: json.
+    :param db: a cursor to a mongoDB database.
+    :type db: mongoDB cursor.
+    '''
+    mess = samp['message']
+    mess_id = samp['message_id']
+    sent = ANALYZER.predict(mess).__dict__['output']
+    hate = HATE_SPEECH.predict(mess).__dict__['output']
+    # common
+    ts = samp['timestamp']
+    # author
+    name = samp['author']['name']
+    com_id = samp['author']['id']
+
+    mess_son = {
+                '_id': mess_id,
+                'message': mess,
+                'date': datetime.datetime.now(),
+                'timestamp': ts,
+                'commentator_id': com_id,
+                'video_title': vid_title,
+                'platform': platform,
+                'sentiment_analysis': sent,
+                'hate_speech_analysis': hate
+                }
+
+    auth_son = {
+                '_id': com_id,
+                'name': name,
+                'platform': platform,
+                'last_update': datetime.datetime.now()
+                }
+    
+    # just in case a commentor is a recurrent user, we will update the last_update
+    try:
+        db.user.insert_one(auth_son)
+    except:
+        db.user.update_one(
+                {"_id": auth_son['_id']},
+                {"$set": {"last_update": datetime.datetime.now()}}
+                )
+    # sometimes, a message can be recorded twice, this will prevent any error
+    try:
+        db.message.insert_one(mess_son)
+    except:
+        pass
+
+
 def add_creator(user, platform, driver):
     
     '''
@@ -338,13 +332,12 @@ def add_creator(user, platform, driver):
         followers = driver.find_element(By.XPATH, '//*[@id="live-channel-about-panel"]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/span/div/div/span').text
         _id = user
         
-    elif platform == 'youtube':
+    else:
         driver.get(user)
-        
-        time.sleep(2)
         
         try:
             driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div/div/div[2]/div[1]/div[3]/div[1]/form[1]/div/div/button/span').click() # reject cookies
+        
         except:
             pass
         

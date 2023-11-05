@@ -10,11 +10,9 @@ initiation_time = time.time()
 while True:
     
     elapsed_time = time.time() - initiation_time
-    
+  
     if elapsed_time >= duration:
         break   
-    else:
-        pass
     
     # try except just in case something unexpected breaks
     for i in range(2):
