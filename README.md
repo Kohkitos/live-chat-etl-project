@@ -33,7 +33,7 @@ This project leverages the following technologies and libraries:
 
 - **MongoDB**: A NoSQL database used for storing the processed chat data.
 
-- **chat_downloader**): A Python library for downloading chat messages from various platforms and live streams. [Link](https://github.com/xenova/chat-downloader)
+- **chat_downloader**: A Python library for downloading chat messages from various platforms and live streams. [Link](https://github.com/xenova/chat-downloader)
 
 - **Selenium**: A web automation tool used to interact with websites and retrieve chat data from websites that don't provide a direct API.
 
