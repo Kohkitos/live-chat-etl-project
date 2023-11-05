@@ -294,9 +294,16 @@ def get_top_youtube_lame():
 def add_creator(user, platform, driver):
     
     '''
-    TO DO:
-    
-    -Add proper description.
+    Extracts the information of the creator provided and then either adds or updates
+    the information in the mongo database.
+
+    :param user: the user that is going to be added or updated to the database,
+    either the name for twitch or the url for youtube.
+    :type user: str
+    :param platform: either twitch or youtube
+    :type platform: str
+    :param driver: selenium driver.
+    :type driver: selenium.webdriver.
     '''
     
     
