@@ -4,8 +4,14 @@ This GitHub repository hosts the code for a live chat ETL (Extract, Transform, L
 
 ## Index
 
-**TBD**
+1. [Project Overview🔎](#project)
+1. [Technologies Used👩‍💻](#techs)
+1. [How to Use This Repository📒](#howto)
+1. [Limitations🛑](#limitations)
+1. [Contributions👥](#contributions)
+1. [License ©](#license)
 
+<a name="project"/>
 ## Project Overview🔎
 
 The project follows an ETL pipeline that consists of the following steps:
@@ -16,6 +22,7 @@ The project follows an ETL pipeline that consists of the following steps:
 
 3. **Load (L)**: Finally, the cleaned and processed data is stored in a MongoDB database for further analysis, reporting, or other downstream applications.
 
+<a name="techs"/>
 ## Technologies Used👩‍💻
 
 This project leverages the following technologies and libraries:
@@ -30,6 +37,7 @@ This project leverages the following technologies and libraries:
 
 - **pysentimiento**: A Python library for sentiment analysis that offers pre-trained models for analyzing text data.
 
+<a name="howto"/>
 ## How to Use This Repository📒
 
 To get started with this project, follow these steps:
@@ -54,6 +62,7 @@ pip install chat_downloader selenium pysentimiento
 
 6. **Explore the Data**: Use the stored data in MongoDB for further analysis, reporting, or any other data-driven tasks.
 
+<a name="limitations"/>
 ## Limitations🛑
 
 While this project aims to provide a useful ETL pipeline for live chat data analysis, there are a few limitations to be aware of:
@@ -68,11 +77,12 @@ While this project aims to provide a useful ETL pipeline for live chat data anal
 
 Please keep these limitations in mind when using or further developing this project, and consider potential enhancements or adaptations to better suit your specific needs and hardware capabilities.
 
-
+<a name="contributions"/>
 ## Contributions👥
 
 Contributions to this project are welcome. If you have ideas for improvements, bug fixes, or additional features, feel free to submit a pull request.
 
+<a name="license"/>
 ## License ©
 
 This project is licensed under the GNU Affero General Public License v3.0. You can find the details in the [LICENSE](LICENSE) file.
