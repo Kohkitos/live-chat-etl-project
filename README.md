@@ -1,6 +1,6 @@
 # Live Chat ETL Project 🔴💭
 
-This GitHub repository hosts the code for a live chat ETL (Extract, Transform, Load) project. The primary goal of this project is to scrape live chats, perform sentiment analysis, identify hate speech, and then store the processed data in a MongoDB database. If you're interested in working with real-time chat data and exploring the sentiment and language used within these chats, this project can serve as a helpful reference.
+This GitHub repository hosts the code for a live chat ETL (Extract, Transform, Load) project for my Iron Hack's Data Analysis bootcamp. The primary goal of this project is to scrape live chats, perform sentiment analysis, identify hate speech, and then store the processed data in a MongoDB database. If you're interested in working with real-time chat data and exploring the sentiment and language used within these chats, this project can serve as a helpful reference.
 
 ## Index
 
@@ -10,7 +10,7 @@ This GitHub repository hosts the code for a live chat ETL (Extract, Transform, L
 
 The project follows an ETL pipeline that consists of the following steps:
 
-1. **Extraction (E)**: We use various technologies like `chat_downloader` and `selenium` to scrape live chats from YouTube and Twitch, as well as scraping the top streamers from each platform from playboard and twitchstats.
+1. **Extraction (E)**: I use various technologies like `chat_downloader` and `selenium` to scrape live chats from YouTube and Twitch, as well as scraping the top streamers from each platform from playboard and twitchstats.
 
 2. **Transformation (T)**: The scraped chat data is then processed and analyzed for sentiment and hate speech using the `pysentimiento` library. Sentiment analysis helps understand the emotional tone of the chat, while hate speech detection helps identify harmful or abusive language.
 
