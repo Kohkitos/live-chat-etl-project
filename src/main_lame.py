@@ -21,7 +21,7 @@ while True:
             if i:
                 users = get_top_twitch_lame()
             else:
-                pass
+                users = get_top_youtube_lame()
 
         # try except just in case a streaming goes offline just in time I initiate function
             for user in users:
