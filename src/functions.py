@@ -257,7 +257,7 @@ def get_top_youtube_lame():
     driver.get(url)
 
     # process to get the top_5
-    best = top_5 = driver.find_element(By.XPATH, '//*[@id="app"]/div[1]/div/main/div[5]/div').find_elements(By.CSS_SELECTOR, 'div.item.list__item')[:1]
+    best = top_5 = driver.find_element(By.XPATH, '//*[@id="app"]/div[1]/div/main/div[5]/div').find_element(By.CSS_SELECTOR, 'div.item.list__item')[:1]
     
     urls = ['youtube']
     
