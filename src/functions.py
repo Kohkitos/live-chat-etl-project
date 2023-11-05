@@ -250,15 +250,21 @@ def get_top_youtube():
 
 
 def add_creator(user, platform, driver):
+    
+    if platform == 'twitch'
+        url = f'https://www.twitch.tv/{user}'
+        driver.get(url)
 
-    url = f'https://www.twitch.tv/{user}'
-    driver.get(url)
-
-    followers = driver.find_element(By.XPATH, '//*[@id="live-channel-about-panel"]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/span/div/div/span').text
-
+        followers = driver.find_element(By.XPATH, '//*[@id="live-channel-about-panel"]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/span/div/div/span').text
+    
+    elif platform == 'youtube':
+        driver.get(user)
+        user = driver.find_element(By.XPATH, '//*[@id="text"]/a').text
+        followers = driver.find_element(By.XPATH, '//*[@id="owner-sub-count"]').text[:6]
+    
     user = {'name': user,
             'platform': platform,
-            'followers': followers,
+            'followers/subs': followers,
             'last_update': datetime.datetime.now()
             }
     
@@ -266,10 +272,10 @@ def add_creator(user, platform, driver):
     db = cursor.live_chats
     
     try:
-        db.creator.insert_one(user)
-    except:
         db.creator.update_one(
-                            {"name": user},
-                            {"$set": {"last_update": datetime.datetime.now(),
-                                     "followers": followers}}
-                            )
+                    {"name": user},
+                    {"$set": {"last_update": datetime.datetime.now(),
+                             "followers": followers}}
+                    )
+    except:
+        db.creator.insert_one(user)
