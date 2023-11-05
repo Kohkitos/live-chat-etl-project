@@ -62,9 +62,6 @@ def extractor(user, platform):
                                          'chat_disabled': True}}
                                 )
         return 1
- 
-    for message in chat:                        
-        add_message(message, db)
 
     # video data
     vid_id = chat.__dict__['id']
@@ -89,6 +86,8 @@ def extractor(user, platform):
                             {"$set": {"last_update": datetime.datetime.now(),
                                      'chat_disabled': False}}
                             )
+    for message in chat:                        
+        add_message(message, db)
  
 '''
 _____  _       _  _____  __    _    
