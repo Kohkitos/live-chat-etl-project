@@ -37,7 +37,7 @@ To get started with this project, follow these steps:
 1. **Clone the Repository**: Begin by cloning this repository to your local machine.
 
 ```python
-git clone https://github.com/kohkitos/etl-project.git
+git clone https://github.com/kohkitos/live-chat-etl-project.git
 ```
 
 2. **Install Dependencies**: Make sure you have Python and the required libraries (chat_downloader, Selenium, and pysentimiento) installed on your system. You can use `pip` to install these dependencies.
