@@ -37,7 +37,7 @@ This project leverages the following technologies and libraries:
 
 - **Selenium**: A web automation tool used to interact with websites and retrieve chat data from websites that don't provide a direct API.
 
-- **pysentimiento**: A Python library for sentiment analysis that offers pre-trained models for analyzing text data.
+- **pysentimiento**: A Python library for sentiment analysis that offers pre-trained models for analyzing text data. [Link](https://github.com/pysentimiento/pysentimiento)
 
 <a name="howto"/>
 
