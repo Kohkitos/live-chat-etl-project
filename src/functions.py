@@ -12,6 +12,14 @@ from selenium.webdriver.common.by import By
 
 from preloads import *
 
+
+'''
+ ___   _   ___   ____  _     _   _      ____ 
+| |_) | | | |_) | |_  | |   | | | |\ | | |_  
+|_|   |_| |_|   |_|__ |_|__ |_| |_| \| |_|__ 
+'''
+
+
 def extractor(user, platform):
     '''
     TO DO LIST:
@@ -22,7 +30,7 @@ def extractor(user, platform):
     url = f'https://www.twitch.tv/{user}'
     chat = ChatDownloader().get_chat(url,
                                     retry_timeout = -1, # -1 makes the downloader to retreive a message as soon as is published
-                                    timeout = 150)      # 150 secs of scrapping
+                                    timeout = 60)       # 60 secs of scrapping
     temp = []
     for message in chat:                        
         temp.append(message)
@@ -117,8 +125,13 @@ def extractor(user, platform):
                     {"_id": commentor['_id']},
                     {"$set": {"last_update": datetime.datetime.now()}}
                     )
-
             
+'''
+_____  _       _  _____  __    _    
+ | |  \ \    /| |  | |  / /`  | |_| 
+ |_|   \_\/\/ |_|  |_|  \_\_, |_| | 
+'''
+          
 def get_top_twitch():
     
     '''
@@ -139,7 +152,7 @@ def get_top_twitch():
     table = driver.find_element(By.CSS_SELECTOR, 'table')
     top_5 = table.find_elements(By.CSS_SELECTOR, 'tr')[:5]
 
-    users = []
+    users = ['twitch']
 
     for e in top_5:
         users.append(e.find_elements(By.CSS_SELECTOR, 'a')[1].text.lower())
@@ -153,6 +166,8 @@ def get_top_twitch():
         
     driver.quit()
     return(users)
+
+# 'lame' version for weaker pcs like mine
 
 def get_top_twitch_lame():
     
@@ -184,6 +199,54 @@ def get_top_twitch_lame():
         
     driver.quit()
     return(users)
+
+
+'''
+ _     ___   _    _____  _     ___   ____ 
+\ \_/ / / \ | | |  | |  | | | | |_) | |_  
+ |_|  \_\_/ \_\_/  |_|  \_\_/ |_|_) |_|__ 
+'''
+
+def get_top_youtube():
+    
+    '''
+    TO DO:
+    
+    - Add description.
+    '''
+
+    driver = webdriver.Chrome(OPCIONES)
+
+    time.sleep(2)
+
+    url = 'https://playboard.co/en/live/top-viewing-all-live-in-spain' # web with top live streams in spanish at the moment
+
+    driver.get(url)
+
+    # process to get the top_5
+    best = driver.find_element(By.XPATH, '//*[@id="app"]/div[1]/div/main/div[5]/div').find_elements(By.CSS_SELECTOR, 'div')[:5]
+    
+    urls = ['youtube']
+    
+    for vid in best:
+        href = vid.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')[30:]
+        urls.append(f'https://www.youtube.com/watch?v={href}')
+    
+    for user in users:
+        if user == users[0]:
+            continue
+        else:
+            add_creator(user, users[0], driver)
+        
+    driver.quit()
+    return(users)
+    
+
+'''
+ _      ___   _      __    ___   ___   ___  
+| |\/| / / \ | |\ | / /`_ / / \ | | \ | |_) 
+|_|  | \_\_/ |_| \| \_\_/ \_\_/ |_|_/ |_|_) 
+'''
 
 
 def add_creator(user, platform, driver):
