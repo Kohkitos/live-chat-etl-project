@@ -282,7 +282,7 @@ def get_top_youtube_lame():
 
 def add_creator(user, platform, driver):
     
-    if platform == 'twitch'
+    if platform == 'twitch':
         url = f'https://www.twitch.tv/{user}'
         driver.get(url)
 
