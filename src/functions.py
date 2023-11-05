@@ -21,9 +21,15 @@ from preloads import *
 
 def extractor(user, platform):
     '''
-    TO DO LIST:
-    
-    - add a proper description
+    Initialise a new session for making requests to the user prompted, and 
+    then extracts the messages, saves video information to a mongo database, 
+    does an analysis of the messages and uploads the results to the same database.
+
+    :param user: the user from whose video the chat is going to be extracted,
+    either the name for twitch or the url for youtube.
+    :type user: str
+    :param platform: either twitch or youtube
+    :type platform: str
     '''
     if platform == 'twitch':
         url = f'https://www.twitch.tv/{user}'
