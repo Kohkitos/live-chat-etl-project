@@ -31,11 +31,11 @@ This project leverages the following technologies and libraries:
 
 - **Python**: The primary programming language used for implementing the ETL pipeline and conducting the analysis.
 
+- **Selenium**: A web automation tool used to interact with websites and retrieve chat data from websites that don't provide a direct API.
+
 - **MongoDB**: A NoSQL database used for storing the processed chat data.
 
 - **chat_downloader**: A Python library for downloading chat messages from various platforms and live streams. [Link](https://github.com/xenova/chat-downloader)
-
-- **Selenium**: A web automation tool used to interact with websites and retrieve chat data from websites that don't provide a direct API.
 
 - **pysentimiento**: A Python library for sentiment analysis that offers pre-trained models for analyzing text data. [Link](https://github.com/pysentimiento/pysentimiento)
 
