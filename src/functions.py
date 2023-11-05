@@ -25,8 +25,11 @@ def extractor(user, platform):
     
     - add a proper description
     '''
-    
-    url = f'https://www.twitch.tv/{user}'
+    if platform == 'twitch':
+        url = f'https://www.twitch.tv/{user}'
+    else:
+        url = user
+        
     chat = ChatDownloader().get_chat(url,
                                     retry_timeout = -1, # -1 makes the downloader to retreive a message as soon as is published
                                     timeout = 60)       # 60 secs of scrapping
@@ -51,16 +54,6 @@ def extractor(user, platform):
                 'platform': platform,
                 'last_update': datetime.datetime.now()
                 }
-    
-    # take creator id
-    new_id = temp[0]['channel_id']
-    try:
-        db.creator.update_one(
-                    {"name": vid_id},
-                    {"$set": {"last_update": datetime.datetime.now()}}
-                    )
-    except:
-        pass
 
     # try pass just in case the author id is already there
     try:
@@ -287,7 +280,8 @@ def add_creator(user, platform, driver):
         driver.get(url)
 
         followers = driver.find_element(By.XPATH, '//*[@id="live-channel-about-panel"]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/span/div/div/span').text
-    
+        _id = user
+        
     elif platform == 'youtube':
         driver.get(user)
         
@@ -298,8 +292,10 @@ def add_creator(user, platform, driver):
         
         user = driver.find_element(By.XPATH, '//*[@id="text"]/a').text
         followers = driver.find_element(By.XPATH, '//*[@id="owner-sub-count"]').text[:6]
+        _id = user[32:]
     
-    user = {'name': user,
+    user = {'_id': _id,
+            'name': user,
             'platform': platform,
             'followers/subs': followers,
             'last_update': datetime.datetime.now()
