@@ -259,10 +259,10 @@ def get_top_youtube_lame():
     # process to get the top_5
     best = driver.find_element(By.XPATH, '//*[@id="app"]/div[1]/div/main/div[5]/div').find_element(By.CSS_SELECTOR, 'div.item.list__item')
     
-    urls = ['youtube']
+    users = ['youtube']
     
     href = best.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')[30:]
-    urls.append(f'https://www.youtube.com/watch?v={href}')
+    users.append(f'https://www.youtube.com/watch?v={href}')
 
     for user in users:
         if user == users[0]:
