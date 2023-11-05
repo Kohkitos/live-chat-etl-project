@@ -305,10 +305,11 @@ def add_creator(user, platform, driver):
     db = cursor.live_chats
     
     try:
-        db.creator.update_one(
-                    {"name": user},
-                    {"$set": {"last_update": datetime.datetime.now(),
-                             "followers": followers}}
-                    )
-    except:
         db.creator.insert_one(user)
+    except:
+        db.creator.update_one(
+                    {"_id": _id},
+                    {"$set": {"last_update": datetime.datetime.now(),
+                             "followers/subs": followers}}
+                    )
+        
