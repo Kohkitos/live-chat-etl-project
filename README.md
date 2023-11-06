@@ -35,9 +35,9 @@ This project leverages the following technologies and libraries:
 
 - **MongoDB**: A NoSQL database used for storing the processed chat data.
 
-- **chat_downloader**: A Python library for downloading chat messages from various platforms and live streams. [Link](https://github.com/xenova/chat-downloader)
+- **chat_downloader**: A Python library for downloading chat messages from various platforms and live streams. [Documentation](https://github.com/xenova/chat-downloader).
 
-- **pysentimiento**: A Python library for sentiment analysis that offers pre-trained models for analyzing text data. [Link](https://github.com/pysentimiento/pysentimiento)
+- **pysentimiento**: A Python library for sentiment analysis that offers pre-trained models for analyzing text data. [Documentation](https://github.com/pysentimiento/pysentimiento).
 
 <a name="howto"/>
 
