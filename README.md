@@ -29,17 +29,17 @@ The project follows an ETL pipeline that consists of the following steps:
 
 This project leverages the following technologies and libraries:
 
-- **Python**: The primary programming language used for implementing the ETL pipeline and conducting the analysis.
+- [**Python**](https://www.python.org): The primary programming language used for implementing the ETL pipeline and conducting the analysis.
 
-- **Selenium**: A web automation tool used to interact with websites and retrieve chat data from websites that don't provide a direct API.
+- [**Selenium**](https://www.selenium.dev): A web automation tool used to interact with websites and retrieve chat data from websites that don't provide a direct API.
 
-- **Joblib**: A Python library to process parallel tasks. Only for main.py.
+- [**Joblib**](https://joblib.readthedocs.io/en/stable/): A Python library to process parallel tasks. Only for main.py.
 
-- **MongoDB**: A NoSQL database used for storing the processed chat data.
+- [**MongoDB**](https://www.mongodb.com): A NoSQL database used for storing the processed chat data. Data was uploaded via [PyMongo](https://pypi.org/project/pymongo/).
 
-- **chat_downloader**: A Python library for downloading chat messages from various platforms and live streams. [Documentation](https://github.com/xenova/chat-downloader).
+- [**chat_downloader**](https://github.com/xenova/chat-downloader): A Python library for downloading chat messages from various platforms and live streams.
 
-- **pysentimiento**: A Python library for sentiment analysis that offers pre-trained models for analyzing text data. [Documentation](https://github.com/pysentimiento/pysentimiento).
+- [**pysentimiento**](https://github.com/pysentimiento/pysentimiento): A Python library for sentiment analysis that offers pre-trained models for analyzing text data.
 
 <a name="howto"/>
 
@@ -98,4 +98,5 @@ This project is licensed under the GNU Affero General Public License v3.0. You c
 
 Enjoy working with live chat data and have fun exploring the world of sentiment analysis and hate speech detection!
 
-
+## Credits 🤝
+Copyright (c) 2021, xenova
