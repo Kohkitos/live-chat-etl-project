@@ -1,5 +1,5 @@
 import time
-from functions import *
+from tools import *
 from preloads import *
 
 duration = 5 * 60 * 60  # 5 hours * 60 minutes * 60 seconds
