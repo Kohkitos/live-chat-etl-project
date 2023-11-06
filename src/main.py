@@ -8,9 +8,7 @@ duration = 5 * 60 * 60  # 5 hours * 60 minutes * 60 seconds
 # Tiempo inicial
 initiation_time = time.time()
 
-para = Parallel(n_jobs=-1,
-                verbose=True
-               )
+para = Parallel(n_jobs = -1, verbose = True)
 
 while True:
     
