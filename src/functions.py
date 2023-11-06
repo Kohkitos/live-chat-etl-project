@@ -133,43 +133,6 @@ def get_top_twitch():
     driver.quit()
     return(users)
 
-# 'lame' version for weaker pcs like mine
-
-def get_top_twitch_lame():
-    
-    '''
-    Retrieves a list with the names of the top 1 streamers with the most viewers
-    in Spanish language.
-
-    :return: a list with the first element being 'twitch', and the other one the
-    streamer's names.
-    :rtype: lst of str.
-    '''
-
-    driver = webdriver.Chrome(OPCIONES)
-
-    time.sleep(2)
-
-    url = 'https://twitchtracker.com/channels/live/spanish' # web with top live streams in spanish at the moment
-
-    driver.get(url)
-
-    # process to get the top_5
-    table = driver.find_element(By.CSS_SELECTOR, 'table')
-    best = table.find_element(By.CSS_SELECTOR, 'tr').find_elements(By.CSS_SELECTOR, 'a')[1].text.lower()
-
-    users = ['twitch', best]
-
-    for user in users:
-        if user == users[0]:
-            continue
-        else:
-            add_creator(user, users[0], driver)
-        
-    driver.quit()
-    return(users)
-
-
 '''
  _     ___   _    _____  _     ___   ____ 
 \ \_/ / / \ | | |  | |  | | | | |_) | |_  
@@ -210,44 +173,7 @@ def get_top_youtube():
             add_creator(user, users[0], driver)
     
     driver.quit()
-    return(users)
-
-def get_top_youtube_lame():
-    
-    '''
-    Retrieves a list with the names of the top 5 streamers with the most viewers
-    in Spain.
-
-    :return: a list with the first element being 'youtube', and the other five the
-    streamers' names.
-    :rtype: lst of str.
-    '''
-
-    driver = webdriver.Chrome(OPCIONES)
-
-    time.sleep(2)
-
-    url = 'https://playboard.co/en/live/top-viewing-all-live-in-spain' # web with top live streams in spanish at the moment
-
-    driver.get(url)
-
-    # process to get the top_5
-    best = driver.find_element(By.XPATH, '//*[@id="app"]/div[1]/div/main/div[5]/div').find_element(By.CSS_SELECTOR, 'div.item.list__item')
-    
-    users = ['youtube']
-    
-    href = best.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')[30:]
-    users.append(f'https://www.youtube.com/watch?v={href}')
-
-    for user in users:
-        if user == users[0]:
-            continue
-        else:
-            add_creator(user, users[0], driver)
-        
-    driver.quit()
-    return(users)
-    
+    return(users)    
 
 '''
  _      ___   _      __    ___   ___   ___  
@@ -369,4 +295,3 @@ def add_creator(user, platform, driver):
                     {"$set": {"last_update": datetime.datetime.now(),
                              "followers/subs": followers}}
                     )
-        
