@@ -39,6 +39,8 @@ This project leverages the following technologies and libraries:
 
 - **pysentimiento**: A Python library for sentiment analysis that offers pre-trained models for analyzing text data. [Documentation](https://github.com/pysentimiento/pysentimiento).
 
+- **Extra: Joblib**: A Python library to process parallel tasks. Only for main.py.
+
 <a name="howto"/>
 
 ## How to Use This Repository📒
