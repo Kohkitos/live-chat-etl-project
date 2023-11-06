@@ -99,4 +99,4 @@ This project is licensed under the GNU Affero General Public License v3.0. You c
 Enjoy working with live chat data and have fun exploring the world of sentiment analysis and hate speech detection!
 
 ## Credits 🤝
-Copyright (c) 2021, xenova
+For ChatDownloader --- Copyright (c) 2021, xenova
