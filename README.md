@@ -33,13 +33,13 @@ This project leverages the following technologies and libraries:
 
 - **Selenium**: A web automation tool used to interact with websites and retrieve chat data from websites that don't provide a direct API.
 
+- **Joblib**: A Python library to process parallel tasks. Only for main.py.
+
 - **MongoDB**: A NoSQL database used for storing the processed chat data.
 
 - **chat_downloader**: A Python library for downloading chat messages from various platforms and live streams. [Documentation](https://github.com/xenova/chat-downloader).
 
 - **pysentimiento**: A Python library for sentiment analysis that offers pre-trained models for analyzing text data. [Documentation](https://github.com/pysentimiento/pysentimiento).
-
-- **Extra: Joblib**: A Python library to process parallel tasks. Only for main.py.
 
 <a name="howto"/>
 
